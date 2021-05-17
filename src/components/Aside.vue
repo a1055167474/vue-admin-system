@@ -8,19 +8,19 @@
              router>
       <el-submenu index="/">
         <template slot="title">
-          <i class="el-icon-s-tools"></i>
-          <span>设置</span>
+          <i class="el-icon-user"></i>
+          <span>人员管理</span>
         </template>
-        <el-menu-item index="/index">首页</el-menu-item>
+        <el-menu-item index="/index">用户信息</el-menu-item>
         <el-menu-item index="/test">test</el-menu-item>
       </el-submenu>
       <el-submenu index="/ts">
         <template slot="title">
           <i class="el-icon-s-tools"></i>
-          <span>设置</span>
+          <span>图书管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/ts/tt">test2</el-menu-item>
+          <el-menu-item index="/ts/tt">库存信息</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="/setting">

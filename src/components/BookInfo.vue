@@ -7,17 +7,14 @@
     </p>
     <div style="width: 400px;margin-top: 20px;display: flex;justify-content:center;">
       <el-form ref="form" :model="searchForm" label-width="80px">
-        <el-form-item label="姓名"  width="100px">
+        <el-form-item label="书名"  width="100px">
           <el-input v-model="searchForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="账号"  width="100px">
-          <el-input v-model="searchForm.account"></el-input>
+        <el-form-item label="备注"  width="100px">
+          <el-input v-model="searchForm.description"></el-input>
         </el-form-item>
-        <el-form-item label="电话"  width="100px">
-          <el-input v-model="searchForm.phone"></el-input>
-        </el-form-item>
-        <el-form-item label="角色"  width="100px">
-          <el-select v-model="searchForm.userRole" placeholder="请选择">
+        <el-form-item label="状态"  width="100px">
+          <el-select v-model="searchForm.state" placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -26,15 +23,15 @@
             </el-option>
           </el-select>
         </el-form-item>
-<!--        <el-form-item label="注册时间"  width="100px">-->
-<!--          <el-date-picker-->
-<!--            v-model="value1"-->
-<!--            type="daterange"-->
-<!--            range-separator="至"-->
-<!--            start-placeholder="开始日期"-->
-<!--            end-placeholder="结束日期">-->
-<!--          </el-date-picker>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="上架时间"  width="100px">-->
+        <!--          <el-date-picker-->
+        <!--            v-model="value1"-->
+        <!--            type="daterange"-->
+        <!--            range-separator="至"-->
+        <!--            start-placeholder="开始日期"-->
+        <!--            end-placeholder="结束日期">-->
+        <!--          </el-date-picker>-->
+        <!--        </el-form-item>-->
       </el-form>
       <el-button type="primary" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
       <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
@@ -50,27 +47,27 @@
       </el-table-column>
       <el-table-column
         prop="name"
-        label="姓名"
+        label="书名"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="account"
-        label="账号"
+        prop="amount"
+        label="数量"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="phone"
-        label="电话"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="userRole"
-        label="角色"
+        prop="description"
+        label="备注"
         width="180">
       </el-table-column>
       <el-table-column
         prop="createTime"
-        label="注册时间"
+        label="上架时间"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="state"
+        label="当前状态"
         width="180">
       </el-table-column>
       <el-table-column
@@ -112,10 +109,10 @@
         <el-form-item label="角色">
           <el-select v-model="form.userRole" placeholder="请选择">
             <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
@@ -160,10 +157,10 @@ export default {
       },
       options: [{
         value: '0',
-        label: '普通用户'
+        label: '可用'
       }, {
         value: '1',
-        label: '管理员'
+        label: '下架'
       }],
       value: '',
       value1: ''

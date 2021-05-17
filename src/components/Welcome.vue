@@ -1,10 +1,13 @@
 <template>
-<p>test2</p>
+  <div>
+    <p>欢迎使用图书管理系统</p>
+  </div>
+
 </template>
 
 <script>
 export default {
-  name: 'Test2'
+  name: 'Welcome'
 }
 </script>
 

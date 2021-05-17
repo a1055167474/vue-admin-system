@@ -5,7 +5,8 @@ import Home from '../components/Home'
 import Index from '../components/Index'
 import Test from '../components/Test'
 import Login from '../components/Login'
-import Test2 from '../components/Test2'
+import Welcome from '../components/Welcome'
+import BookInfo from '../components/BookInfo'
 import MenuSetting from '../components/setting/MenuSetting'
 import Role from '../components/setting/Role'
 
@@ -17,7 +18,7 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
-      redirect: '/index',
+      redirect: '/welcome',
       children: [
         {
           path: 'index',
@@ -29,6 +30,12 @@ export default new Router({
           path: 'test',
           name: 'Test',
           component: Test
+        },
+
+        {
+          path: 'welcome',
+          name: 'Welcome',
+          component: Welcome
         },
         {
           path: 'hello',
@@ -48,8 +55,8 @@ export default new Router({
       children: [
         {
           path: 'tt',
-          name: 'Test2',
-          component: Test2
+          name: 'BookInfo',
+          component: BookInfo
         }
       ]
     },
