@@ -10,31 +10,31 @@ axios.defaults.withCredentials = true
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 
 // 响应拦截器
-axios.interceptors.response.use(
-  response => {
-    if (response.status === 200) {
-      return Promise.resolve(response)
-    } else {
-      return Promise.reject(response)
-    }
-  },
-  error => {
-    console.log(error)
-    ElementUI.Message({
-      type: 'error',
-      message: error.response.data.message || error.toString()
-    })
-    if (error.response.status === 401) {
-      router.replace({
-        path: '/login',
-        query: {
-          redirect: router.currentRoute.fullPath
-        }
-      })
-    }
-    return Promise.reject(error)
-  }
-)
+// axios.interceptors.response.use(
+//   response => {
+//     if (response.status === 'success') {
+//       return Promise.resolve(response)
+//     } else {
+//       return Promise.reject(response)
+//     }
+//   },
+//   error => {
+//     console.log(error)
+//     ElementUI.Message({
+//       type: 'error',
+//       message: error.response.data.message || error.toString()
+//     })
+//     if (error.response.status === 401) {
+//       router.replace({
+//         path: '/login',
+//         query: {
+//           redirect: router.currentRoute.fullPath
+//         }
+//       })
+//     }
+//     return Promise.reject(error)
+//   }
+// )
 
 /**
  * get方法，对应get请求
@@ -70,7 +70,7 @@ export function post (url, params) {
   return new Promise((resolve, reject) => {
     axios.post(url, params)
       .then(res => {
-        if (res.data.status === 1) {
+        if (res.data.status === 'success') {
           resolve(res.data)
         } else {
           reject(res.data)

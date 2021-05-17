@@ -1,7 +1,6 @@
 <template>
   <div>
     <p>
-      welcome!
       <el-button @click="queryUser">确认</el-button>
       <el-button @click="insertForm()">新增</el-button>
       <el-button type="danger" plain @click="logout">退出</el-button>
@@ -20,26 +19,38 @@
       border
       v-loading="tableLoading">
       <el-table-column
+        type="index"
+        label="序号"
+        width="50">
+      </el-table-column>
+      <el-table-column
         prop="name"
-        label="名字"
+        label="姓名"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="age"
-        label="年纪"
+        prop="account"
+        label="账号"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="length"
-        label="长度">
+        prop="phone"
+        label="电话"
+        width="180">
       </el-table-column>
       <el-table-column
-        prop="email"
-        label="邮箱">
+        prop="userRole"
+        label="角色"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="createTime"
+        label="注册时间"
+        width="180">
       </el-table-column>
       <el-table-column
         prop="action"
-        width="160"
+        width="180"
         label="操作">
         <template slot-scope="scope">
           <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>
@@ -56,7 +67,7 @@
     </el-pagination>
 
     <el-dialog
-      title="编辑"
+      :title= dialogName
       :visible.sync="dialogVisible"
       @close="resetForm"
       width="30%">
@@ -64,14 +75,14 @@
         <el-form-item label="姓名">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="年纪">
-          <el-input type="number" v-model="form.age"></el-input>
+        <el-form-item label="账号">
+          <el-input v-model="form.account"></el-input>
         </el-form-item>
-        <el-form-item label="长度">
-          <el-input type="number" v-model="form.length"></el-input>
+        <el-form-item label="电话">
+          <el-input v-model="form.phone"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱">
-          <el-input type="email" v-model="form.email"></el-input>
+        <el-form-item label="密码">
+         <el-input autocomplete="off" v-model="form.password" show-password></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -93,11 +104,12 @@ export default {
       tableData: [],
       tableLoading: false,
       dialogVisible: false,
+      dialogName: '编辑',
       form: {
         name: '',
-        age: '',
-        length: '',
-        email: ''
+        account: '',
+        phone: '',
+        password: ''
       },
       type: 'insert',
       currentPage: 1,
@@ -142,8 +154,8 @@ export default {
         }
       ).then(res => {
         this.$message.success(res.message)
-        this.tableData = res.data.data
-        this.total = res.data.total
+        this.tableData = res.result
+        this.total = res.total
         this.tableLoading = false
         // eslint-disable-next-line handle-callback-err
       }).catch(err => {
@@ -177,6 +189,7 @@ export default {
     },
     editForm (row) {
       this.dialogVisible = true
+      this.dialogName = '编辑'
       this.form = JSON.parse(JSON.stringify(row))
       this.type = 'update'
     },
@@ -194,6 +207,7 @@ export default {
     },
     insertForm () {
       this.type = 'insert'
+      this.dialogName = '新增'
       this.dialogVisible = true
     },
     insertUser (form) {
