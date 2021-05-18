@@ -20,7 +20,7 @@ export default {
   },
 
   login (params) {
-    return post(baseUrl + '/login', params)
+    return post(baseUrl + '/login/login', params)
   },
 
   logout (params) {

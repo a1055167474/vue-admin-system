@@ -21,9 +21,11 @@ export default new Vuex.Store({
   },
   mutations: {
     set_userInfo (state, info) {
+      console.log(info)
       state.userinfo = info
     },
     set_isLogin (state, is) {
+      console.log(is)
       state.isLogin = is
     },
     logout (state) {

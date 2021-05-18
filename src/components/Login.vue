@@ -1,7 +1,7 @@
 <template>
   <div class="bg">
     <div class="login-center">
-      <el-tabs v-model="activeName" stretch @tab-click="handleClick" lazy>
+      <el-tabs v-model="activeName" stretch lazy>
         <el-tab-pane label="账号密码登录" name="first">
           <LoginInput />
         </el-tab-pane>

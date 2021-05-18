@@ -13,6 +13,7 @@
         </template>
         <el-menu-item index="/index">用户信息</el-menu-item>
         <el-menu-item index="/test">test</el-menu-item>
+        <el-menu-item index="/welcome">shouye</el-menu-item>
       </el-submenu>
       <el-submenu index="/ts">
         <template slot="title">

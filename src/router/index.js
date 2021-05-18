@@ -18,6 +18,9 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
+      meta: {
+        requireAuth: true
+      },
       redirect: '/welcome',
       children: [
         {
@@ -36,6 +39,9 @@ export default new Router({
           path: 'welcome',
           name: 'Welcome',
           component: Welcome
+          // meta: {
+          //   requireAuth: true
+          // }
         },
         {
           path: 'hello',

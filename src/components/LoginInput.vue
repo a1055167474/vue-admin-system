@@ -4,7 +4,7 @@
     <el-input placeholder="请输入账号" v-model="account">
       <template slot="prepend">账号</template>
     </el-input>
-    <el-input placeholder="请输入密码" v-model="pwd" suffix-icon="el-icon-view" type="password" @keydown.enter.native="login">
+    <el-input placeholder="请输入密码" v-model="password" suffix-icon="el-icon-view" type="password" @keydown.enter.native="login">
       <template slot="prepend">密码</template>
     </el-input>
     <!--    <p>忘记密码</p>-->
@@ -19,19 +19,20 @@ export default {
   data () {
     return {
       account: '',
-      pwd: ''
+      password: ''
     }
   },
   methods: {
     login () {
       http.login({
         account: this.account,
-        pwd: this.pwd
+        password: this.password
       }).then(res => {
+        // console.log(res)
         this.$message.success(res.message)
-        this.$router.push('/')
-        this.$store.commit('set_userInfo', res.data)
+        this.$store.commit('set_userInfo', res.result['userId'])
         this.$store.commit('set_isLogin', true)
+        this.$router.push('/')
       })
     }
   }
