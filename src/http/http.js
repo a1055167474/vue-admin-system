@@ -24,7 +24,7 @@ axios.interceptors.response.use(
     if (error.response.status === 302) {
       ElementUI.Message({
         type: 'warning',
-        message: '请登录'
+        message: '未登录'
       })
       this.$store.commit('logout');
       router.replace({

@@ -30,7 +30,7 @@ export default {
       }).then(res => {
         // console.log(res)
         this.$message.success(res.message)
-        this.$store.commit('set_userInfo', res.result['userId'])
+        this.$store.commit('set_userInfo', res.result)
         this.$store.commit('set_isLogin', true)
         this.$router.push('/')
       })
