@@ -33,5 +33,9 @@ export default {
 
   queryRoleList (params) {
     return post(baseUrl + '/queryRole', params)
+  },
+
+  getUserInfo (params) {
+    return get(baseUrl + '/user/getUserInfo', params)
   }
 }

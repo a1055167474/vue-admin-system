@@ -53,7 +53,7 @@ export function get (url, params) {
     axios.get(url, {
       params: params
     }).then(res => {
-      if (res.data.status === 1) {
+      if (res.data.status === 'success') {
         resolve(res.data)
       } else {
         ElementUI.Message({
