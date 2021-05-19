@@ -1,6 +1,7 @@
 import axios from 'axios'
 import ElementUI from 'element-ui'
 import router from '../router/index'
+import store from '../store/index'
 
 // 设置超时时间
 axios.defaults.timeout = 5000
@@ -20,18 +21,19 @@ axios.interceptors.response.use(
     }
   },
   error => {
-    console.log(error)
     if (error.response.status === 302) {
       ElementUI.Message({
         type: 'warning',
         message: '未登录'
       })
-      this.$store.commit('logout');
-      router.replace({
+      store.commit('logout')
+      router.push({
         path: '/login',
         query: {
           redirect: router.currentRoute.fullPath
         }
+      }).then(r => {
+        console.log(1)
       })
       return Promise.reject(error)
     }
