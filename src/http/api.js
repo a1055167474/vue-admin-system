@@ -37,5 +37,21 @@ export default {
 
   getUserInfo (params) {
     return get(baseUrl + '/user/getUserInfo', params)
+  },
+
+  queryBookList (params) {
+    return post(baseUrl + '/book/selectAllBook', params)
+  },
+
+  insertBookList (params) {
+    return post(baseUrl + '/book/insertBook', params)
+  },
+
+  deleteBookList (params) {
+    return get(baseUrl + '/book/deleteBookById', params)
+  },
+
+  updateBookList (params) {
+    return post(baseUrl + '/book/updateBook', params)
   }
 }

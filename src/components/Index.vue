@@ -1,9 +1,9 @@
 <template>
   <div>
     <p>
-      <el-button @click="queryUser">确认</el-button>
+<!--      <el-button @click="queryUser">确认</el-button>-->
       <el-button @click="insertForm()">新增</el-button>
-      <el-button type="danger" plain @click="logout">退出</el-button>
+<!--      <el-button type="danger" plain @click="logout">退出</el-button>-->
     </p>
     <div style="width: 400px;margin-top: 20px;display: flex;justify-content:center;">
       <el-form ref="form" :model="searchForm" label-width="80px">

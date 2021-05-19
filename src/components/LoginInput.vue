@@ -1,6 +1,6 @@
 <template>
   <div class="login-input">
-    <img src="../assets/logo.png" alt="">
+    <img src="../assets/login.jpg" height="200px" width="200px" alt="">
     <el-input placeholder="请输入账号" v-model="account">
       <template slot="prepend">账号</template>
     </el-input>

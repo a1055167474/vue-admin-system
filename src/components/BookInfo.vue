@@ -1,14 +1,12 @@
 <template>
   <div>
-    <p>
-      <el-button @click="queryUser">确认</el-button>
-      <el-button @click="insertForm()">新增</el-button>
-      <el-button type="danger" plain @click="logout">退出</el-button>
-    </p>
     <div style="width: 400px;margin-top: 20px;display: flex;justify-content:center;">
       <el-form ref="form" :model="searchForm" label-width="80px">
         <el-form-item label="书名"  width="100px">
           <el-input v-model="searchForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="作者"  width="100px">
+          <el-input v-model="searchForm.author"></el-input>
         </el-form-item>
         <el-form-item label="备注"  width="100px">
           <el-input v-model="searchForm.description"></el-input>
@@ -36,6 +34,9 @@
       <el-button type="primary" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
       <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
     </div>
+    <div>
+      <el-button type="primary" @click="insertForm()">新增</el-button>
+    </div>
     <el-table
       :data="tableData"
       border
@@ -48,6 +49,11 @@
       <el-table-column
         prop="name"
         label="书名"
+        width="240">
+      </el-table-column>
+      <el-table-column
+        prop="author"
+        label="作者"
         width="180">
       </el-table-column>
       <el-table-column
@@ -68,11 +74,10 @@
       <el-table-column
         prop="state"
         label="当前状态"
-        width="180">
+        width="80">
       </el-table-column>
       <el-table-column
         prop="action"
-        width="180"
         label="操作">
         <template slot-scope="scope">
           <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>
@@ -94,20 +99,20 @@
       @close="resetForm"
       width="30%">
       <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="姓名">
+        <el-form-item label="名称">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="电话">
-          <el-input v-model="form.phone"></el-input>
+        <el-form-item label="作者">
+          <el-input v-model="form.author"></el-input>
         </el-form-item>
-        <el-form-item label="账号">
-          <el-input v-model="form.account"></el-input>
+        <el-form-item label="备注">
+          <el-input v-model="form.description"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
-          <el-input autocomplete="off" v-model="form.password" show-password></el-input>
+        <el-form-item label="数量">
+          <el-input v-model="form.amount"></el-input>
         </el-form-item>
-        <el-form-item label="角色">
-          <el-select v-model="form.userRole" placeholder="请选择">
+        <el-form-item label="状态">
+          <el-select v-model="form.state" placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -138,22 +143,24 @@ export default {
       dialogVisible: false,
       dialogName: '编辑',
       form: {
+        id: '',
         name: '',
-        account: '',
-        phone: '',
-        password: '',
-        userRole: ''
+        author: '',
+        amount: '',
+        description: '',
+        createTime: '',
+        state: ''
       },
       type: 'insert',
       currentPage: 1,
       total: 0,
       searchForm: {
+        id: '',
         name: '',
-        account: '',
-        phone: '',
-        userRole: '',
+        author: '',
+        description: '',
         createTime: '',
-        endTime: ''
+        state: ''
       },
       options: [{
         value: '0',
@@ -166,42 +173,17 @@ export default {
       value1: ''
     }
   },
-  created () {
-    // this.queryPhpUser();
-  },
   methods: {
-    queryPhpUser () {
-      this.axios.post('/api/dbTest/insertUser', {
-        name: 'chen1233',
-        age: 23,
-        email: '223333@qq.com',
-        length: 18
-      })
-        .then(res => {
-          if (res.data.status === 1) {
-            this.$message.success('保存成功')
-          } else {
-            this.$message.warning(res.data.message)
-          }
-          console.log(res.data)
-        })
-        .catch(err => {
-          console.log(err)
-          this.$message.error(err.message)
-        })
-    },
-    queryUser (param) {
+    queryBook (param) {
       this.tableLoading = true
-      http.queryUserList(
+      http.queryBookList(
         {
           ...param,
           name: this.searchForm.name,
-          account: this.searchForm.account,
-          phone: this.searchForm.phone,
-          userRole: this.searchForm.userRole,
-          createTime: this.searchForm.createTime,
-          endTime: this.searchForm.endTime
-
+          author: this.searchForm.author,
+          description: this.searchForm.description,
+          state: this.searchForm.state,
+          createTime: this.searchForm.createTime
         }
       ).then(res => {
         this.$message.success(res.message)
@@ -228,14 +210,14 @@ export default {
       })
     },
     deleteTable (row) {
-      http.deleteUserList({
+      http.deleteBookList({
         id: row.id
       }).then(res => {
         this.$message({
           type: 'success',
           message: '删除成功!'
         })
-        this.queryUser()
+        this.queryBook()
       })
     },
     editForm (row) {
@@ -245,7 +227,7 @@ export default {
       this.type = 'update'
     },
     updateTable (form) {
-      http.updateUserList({
+      http.updateBookList({
         ...form
       }).then(res => {
         this.$message({
@@ -253,16 +235,16 @@ export default {
           message: '更新成功!'
         })
         this.dialogVisible = false
-        this.queryUser()
+        this.queryBook()
       })
     },
     insertForm () {
       this.type = 'insert'
-      this.dialogName = '新增'
+      this.dialogName = '图书入库'
       this.dialogVisible = true
     },
-    insertUser (form) {
-      http.insertUserList({
+    insertBook (form) {
+      http.insertBookList({
         ...form
       }).then(res => {
         this.$message({
@@ -270,22 +252,23 @@ export default {
           message: '新增成功!'
         })
         this.dialogVisible = false
-        this.queryUser()
+        this.queryBook()
       })
     },
     checkUpdateOrInsert (type, form) {
       if (type === 'update') {
         this.updateTable(form)
       } else {
-        this.insertUser(form)
+        this.insertBook(form)
       }
     },
     resetForm () {
       this.form = {
         name: '',
-        age: '',
-        length: '',
-        email: ''
+        author: '',
+        description: '',
+        amount: '',
+        state: ''
       }
       console.log(this.form)
     },
@@ -293,16 +276,20 @@ export default {
       let param = {
         pageNum: val - 1
       }
-      this.queryUser(param)
+      this.queryBook(param)
     },
     resetSearch () {
       this.searchForm = {
-        name: ''
+        name: '',
+        author: '',
+        description: '',
+        createTime: '',
+        state: ''
       }
-      this.queryUser()
+      this.queryBook()
     },
     search () {
-      this.queryUser()
+      this.queryBook()
     },
     logout () {
       http.logout().then(res => {
@@ -312,7 +299,7 @@ export default {
     }
   },
   mounted () {
-    this.queryUser()
+    this.queryBook()
   }
 }
 </script>

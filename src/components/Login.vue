@@ -38,7 +38,9 @@ export default {
 .bg{
   width: 100vw;
   height: 100vh;
-  background: url("../assets/bg.jpg") repeat left top;
+  background: url("../assets/bg2.jpg") no-repeat;
+  background-size: 100% 100%;
+  background-attachment:fixed;
   overflow-y: hidden;
 }
 .login-center{
