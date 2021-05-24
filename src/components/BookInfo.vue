@@ -2,7 +2,6 @@
   <div>
     <div style="margin-top: 20px">
       <el-form ref="form" :model="searchForm" label-width="80px">
-          </el-select>
         <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item label="书名" >
