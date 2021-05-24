@@ -203,8 +203,9 @@ export default {
           phone: this.searchForm.phone,
           userRole: this.searchForm.userRole,
           createTime: this.searchForm.createTime,
-          endTime: this.searchForm.endTime
-
+          endTime: this.searchForm.endTime,
+          page: this.currentPage,
+          size: 10
         }
       ).then(res => {
         this.$message.success(res.message)

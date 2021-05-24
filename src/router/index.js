@@ -9,6 +9,7 @@ import Welcome from '../components/Welcome'
 import BookInfo from '../components/BookInfo'
 import MenuSetting from '../components/setting/MenuSetting'
 import Role from '../components/setting/Role'
+import BorrowReturn from '../components/BorrowReturn'
 
 Vue.use(Router)
 
@@ -74,6 +75,22 @@ export default new Router({
           path: 'menu',
           name: 'MenuSetting',
           component: MenuSetting
+        },
+        {
+          path: 'role',
+          name: 'Role',
+          component: Role
+        }
+      ]
+    },
+    {
+      path: '/borrow',
+      component: Home,
+      children: [
+        {
+          path: 'borrowReturn',
+          name: 'BorrowReturn',
+          component: BorrowReturn
         },
         {
           path: 'role',

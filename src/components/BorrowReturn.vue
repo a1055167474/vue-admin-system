@@ -132,182 +132,182 @@
 </template>
 
 <script>
-import http from '../http/api'
+  import http from '../http/api'
 
-export default {
-  name: 'Index',
-  data () {
-    return {
-      tableData: [],
-      tableLoading: false,
-      dialogVisible: false,
-      dialogName: '编辑',
-      form: {
-        id: '',
-        name: '',
-        author: '',
-        amount: '',
-        description: '',
-        createTime: '',
-        state: ''
-      },
-      type: 'insert',
-      currentPage: 1,
-      total: 0,
-      searchForm: {
-        id: '',
-        name: '',
-        author: '',
-        description: '',
-        createTime: '',
-        state: ''
-      },
-      options: [{
-        value: '0',
-        label: '可用'
-      }, {
-        value: '1',
-        label: '下架'
-      }],
-      value: '',
-      value1: ''
-    }
-  },
-  methods: {
-    queryBook (param) {
-      this.tableLoading = true
-      http.queryBookList(
-        {
-          ...param,
-          book:{
-            name: this.searchForm.name,
-            author: this.searchForm.author,
-            description: this.searchForm.description,
-            state: this.searchForm.state,
-            createTime: this.searchForm.createTime
-          },
-          page:{
-            page: this.currentPage,
-            limit: 10
+  export default {
+    name: 'BorrowReturn',
+    data () {
+      return {
+        tableData: [],
+        tableLoading: false,
+        dialogVisible: false,
+        dialogName: '编辑',
+        form: {
+          id: '',
+          name: '',
+          author: '',
+          amount: '',
+          description: '',
+          createTime: '',
+          state: ''
+        },
+        type: 'insert',
+        currentPage: 1,
+        total: 0,
+        searchForm: {
+          id: '',
+          name: '',
+          author: '',
+          description: '',
+          createTime: '',
+          state: ''
+        },
+        options: [{
+          value: '0',
+          label: '可用'
+        }, {
+          value: '1',
+          label: '下架'
+        }],
+        value: '',
+        value1: ''
+      }
+    },
+    methods: {
+      queryBook (param) {
+        this.tableLoading = true
+        http.queryBookList(
+          {
+            ...param,
+            book:{
+              name: this.searchForm.name,
+              author: this.searchForm.author,
+              description: this.searchForm.description,
+              state: this.searchForm.state,
+              createTime: this.searchForm.createTime
+            },
+            page:{
+              page: this.currentPage,
+              limit: 10
+            }
           }
+        ).then(res => {
+          this.$message.success(res.message)
+          this.tableData = res.result
+          this.total = res.total
+          this.tableLoading = false
+          // eslint-disable-next-line handle-callback-err
+        }).catch(err => {
+          this.tableLoading = false
+        })
+      },
+      confirmDelete (row) {
+        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.deleteTable(row)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
+      deleteTable (row) {
+        http.deleteBookList({
+          id: row.id
+        }).then(res => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          this.queryBook()
+        })
+      },
+      editForm (row) {
+        this.dialogVisible = true
+        this.dialogName = '编辑'
+        this.form = JSON.parse(JSON.stringify(row))
+        this.type = 'update'
+      },
+      updateTable (form) {
+        http.updateBookList({
+          ...form
+        }).then(res => {
+          this.$message({
+            type: 'success',
+            message: '更新成功!'
+          })
+          this.dialogVisible = false
+          this.queryBook()
+        })
+      },
+      insertForm () {
+        this.type = 'insert'
+        this.dialogName = '图书入库'
+        this.dialogVisible = true
+      },
+      insertBook (form) {
+        http.insertBookList({
+          ...form
+        }).then(res => {
+          this.$message({
+            type: 'success',
+            message: '新增成功!'
+          })
+          this.dialogVisible = false
+          this.queryBook()
+        })
+      },
+      checkUpdateOrInsert (type, form) {
+        if (type === 'update') {
+          this.updateTable(form)
+        } else {
+          this.insertBook(form)
         }
-      ).then(res => {
-        this.$message.success(res.message)
-        this.tableData = res.result
-        this.total = res.total
-        this.tableLoading = false
-        // eslint-disable-next-line handle-callback-err
-      }).catch(err => {
-        this.tableLoading = false
-      })
-    },
-    confirmDelete (row) {
-      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.deleteTable(row)
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      })
-    },
-    deleteTable (row) {
-      http.deleteBookList({
-        id: row.id
-      }).then(res => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
+      },
+      resetForm () {
+        this.form = {
+          name: '',
+          author: '',
+          description: '',
+          amount: '',
+          state: ''
+        }
+        console.log(this.form)
+      },
+      handleCurrentChange (val) {
+        let param = {
+          pageNum: val - 1
+        }
+        this.queryBook(param)
+      },
+      resetSearch () {
+        this.searchForm = {
+          name: '',
+          author: '',
+          description: '',
+          createTime: '',
+          state: ''
+        }
         this.queryBook()
-      })
-    },
-    editForm (row) {
-      this.dialogVisible = true
-      this.dialogName = '编辑'
-      this.form = JSON.parse(JSON.stringify(row))
-      this.type = 'update'
-    },
-    updateTable (form) {
-      http.updateBookList({
-        ...form
-      }).then(res => {
-        this.$message({
-          type: 'success',
-          message: '更新成功!'
-        })
-        this.dialogVisible = false
+      },
+      search () {
         this.queryBook()
-      })
-    },
-    insertForm () {
-      this.type = 'insert'
-      this.dialogName = '图书入库'
-      this.dialogVisible = true
-    },
-    insertBook (form) {
-      http.insertBookList({
-        ...form
-      }).then(res => {
-        this.$message({
-          type: 'success',
-          message: '新增成功!'
+      },
+      logout () {
+        http.logout().then(res => {
+          this.$store.commit('logout')
+          this.$router.replace('/login')
         })
-        this.dialogVisible = false
-        this.queryBook()
-      })
-    },
-    checkUpdateOrInsert (type, form) {
-      if (type === 'update') {
-        this.updateTable(form)
-      } else {
-        this.insertBook(form)
       }
     },
-    resetForm () {
-      this.form = {
-        name: '',
-        author: '',
-        description: '',
-        amount: '',
-        state: ''
-      }
-      console.log(this.form)
-    },
-    handleCurrentChange (val) {
-      let param = {
-        pageNum: val - 1
-      }
-      this.queryBook(param)
-    },
-    resetSearch () {
-      this.searchForm = {
-        name: '',
-        author: '',
-        description: '',
-        createTime: '',
-        state: ''
-      }
+    mounted () {
       this.queryBook()
-    },
-    search () {
-      this.queryBook()
-    },
-    logout () {
-      http.logout().then(res => {
-        this.$store.commit('logout')
-        this.$router.replace('/login')
-      })
     }
-  },
-  mounted () {
-    this.queryBook()
   }
-}
 </script>
 
 <style scoped>
