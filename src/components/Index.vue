@@ -5,7 +5,7 @@
       <el-button @click="insertForm()">新增</el-button>
 <!--      <el-button type="danger" plain @click="logout">退出</el-button>-->
     </p>
-    <div style="width: 400px;margin-top: 20px;display: flex;justify-content:center;">
+    <div style="width: 400px;margin-top: 20px;display: flex;">
       <el-form ref="form" :model="searchForm" label-width="80px">
         <el-form-item label="姓名"  width="100px">
           <el-input v-model="searchForm.name"></el-input>

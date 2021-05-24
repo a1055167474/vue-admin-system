@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="width: 400px;margin-top: 20px;display: flex;justify-content:center;">
+    <div style="width: 400px;margin-top: 20px;display: flex;">
       <el-form ref="form" :model="searchForm" label-width="80px">
         <el-form-item label="书名"  width="100px">
           <el-input v-model="searchForm.name"></el-input>
@@ -21,15 +21,15 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <!--        <el-form-item label="上架时间"  width="100px">-->
-        <!--          <el-date-picker-->
-        <!--            v-model="value1"-->
-        <!--            type="daterange"-->
-        <!--            range-separator="至"-->
-        <!--            start-placeholder="开始日期"-->
-        <!--            end-placeholder="结束日期">-->
-        <!--          </el-date-picker>-->
-        <!--        </el-form-item>-->
+                <el-form-item label="上架时间"  width="100px">
+                  <el-date-picker
+                    v-model="value1"
+                    type="daterange"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期">
+                  </el-date-picker>
+                </el-form-item>
       </el-form>
       <el-button type="primary" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
       <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
