@@ -1,24 +1,20 @@
 <template>
   <div>
     <div style="margin-top: 20px">
-      <el-form ref="form" :model="searchForm" label-width="80px">
-        <el-row :gutter="20">
-          <el-col :span="6">
+      <el-form class="form" ref="form" :model="searchForm" label-width="80px">
+      
             <el-form-item label="书名" >
               <el-input v-model="searchForm.name" ></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="6">
+      
             <el-form-item label="作者">
               <el-input v-model="searchForm.author"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="6">
+        
             <el-form-item label="备注">
               <el-input v-model="searchForm.description"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="6">
+        
             <el-form-item label="状态">
               <el-select v-model="searchForm.state" placeholder="请选择">
                 <el-option
@@ -29,8 +25,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+          
           <el-form-item label="上架时间">
             <el-date-picker
               v-model="value1"
@@ -40,19 +35,11 @@
               end-placeholder="结束日期">
             </el-date-picker>
           </el-form-item>
-          </el-col>
-          <el-col :span="2">
-            <el-button type="primary" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
-          </el-col>
-          <el-col :span="2">
+          <div style="float:right">
+            <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
             <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
-          </el-col>
-
-          <el-col :span="2">
-            <el-button type="primary" plain @click="insertForm()">新增</el-button>
-          </el-col>
-
-        </el-row>
+            <el-button type="primary" icon="el-icon-plus" plain @click="insertForm()">新增</el-button>
+          </div>
 <!--        <el-form-item label="书名" >-->
 <!--          <el-input v-model="searchForm.name" ></el-input>-->
 <!--        </el-form-item>-->
@@ -105,7 +92,9 @@
       </el-table-column>
       <el-table-column
         prop="amount"
-        label="数量">
+        label="数量"
+        align="center"
+        width="60">
       </el-table-column>
       <el-table-column
         prop="description"
@@ -119,6 +108,7 @@
       </el-table-column>
       <el-table-column
         label="当前状态"
+        align="center"
         width="80">
         <template slot-scope="scope">{{ scope.row.state === 0 ? '可用' : '下架' }}</template>
       </el-table-column>
@@ -390,4 +380,11 @@ export default {
 
 <style scoped>
 
+.form{
+  width: 100%;
+}
+.form .el-form-item /deep/{
+  width: 33%;
+  float: left;
+}
 </style>

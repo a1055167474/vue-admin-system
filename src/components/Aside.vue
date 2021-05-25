@@ -27,18 +27,14 @@
           <i class="el-icon-reading"></i>
           <span>图书管理</span>
         </template>
-        <el-menu-item-group>
-          <el-menu-item index="/ts/tt">库存信息</el-menu-item>
-        </el-menu-item-group>
+        <el-menu-item index="/ts/tt">库存信息</el-menu-item>
       </el-submenu>
       <el-submenu index="/borrow">
         <template slot="title">
           <i class="el-icon-s-claim"></i>
           <span>借出记录管理</span>
         </template>
-        <el-menu-item-group>
           <el-menu-item index="/borrow/borrowReturn">借出信息</el-menu-item>
-        </el-menu-item-group>
       </el-submenu>
 <!--      <el-submenu index="/setting">-->
 <!--        <template slot="title">-->
@@ -76,7 +72,7 @@ export default {
   padding-left: 60px !important;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 250px;
+  width: 200px;
   min-height: 400px;
 }
 </style>
