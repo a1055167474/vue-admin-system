@@ -53,5 +53,9 @@ export default {
 
   updateBookList (params) {
     return post(baseUrl + '/book/updateBook', params)
+  },
+
+  borrowBook (params) {
+    return post(baseUrl + '/borrowReturn/addBorrowBook', params)
   }
 }

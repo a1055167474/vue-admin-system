@@ -129,6 +129,7 @@
         label="操作">
         <template slot-scope="scope">
           <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>
+          <el-button @click="borrowBook(scope.row)" type="primary" plain size="small">借阅</el-button>
           <el-button @click="confirmDelete(scope.row)" type="danger" plain size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -273,6 +274,32 @@ export default {
         this.$message({
           type: 'success',
           message: '删除成功!'
+        })
+        this.queryBook()
+      })
+    },
+    borrowBook (row) {
+      this.$confirm('是否借阅该图书?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.borrowOpt(row)
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消借阅'
+        })
+      })
+    },
+    borrowOpt(row){
+      http.borrowBook({
+        bookId: row.id,
+        amount: 1
+      }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '借阅成功!'
         })
         this.queryBook()
       })

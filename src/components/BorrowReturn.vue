@@ -59,16 +59,16 @@
       <el-table-column
         prop="amount"
         label="数量"
-        width="180">
+        width="60">
       </el-table-column>
       <el-table-column
         prop="description"
-        label="备注"
+        label="借用者"
         width="180">
       </el-table-column>
       <el-table-column
         prop="createTime"
-        label="上架时间"
+        label="借用时间"
         width="180">
       </el-table-column>
       <el-table-column
@@ -77,11 +77,16 @@
         width="80">
       </el-table-column>
       <el-table-column
+        prop="createTime"
+        label="归还时间"
+        width="180">
+      </el-table-column>
+      <el-table-column
         prop="action"
         label="操作">
         <template slot-scope="scope">
-          <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>
-          <el-button @click="confirmDelete(scope.row)" type="danger" plain size="small">删除</el-button>
+          <el-button @click="editForm(scope.row)" type="primary" plain size="small">归还</el-button>
+          <el-button @click="confirmDelete(scope.row)" type="danger" plain size="small">挂失</el-button>
         </template>
       </el-table-column>
     </el-table>
