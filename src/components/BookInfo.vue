@@ -92,21 +92,16 @@
       <el-table-column
         type="index"
         label="序号"
-<<<<<<< HEAD
         align="center"
-=======
->>>>>>> c949ead05c1f7aa78e19159e1f13b68a887f2a0a
         width="50">
       </el-table-column>
       <el-table-column
         prop="name"
-<<<<<<< HEAD
         label="书名">
       </el-table-column>
       <el-table-column
         prop="author"
         label="作者">
-=======
         label="书名"
         width="240">
       </el-table-column>
@@ -114,16 +109,11 @@
         prop="author"
         label="作者"
         width="180">
->>>>>>> c949ead05c1f7aa78e19159e1f13b68a887f2a0a
       </el-table-column>
       <el-table-column
         prop="amount"
         label="数量"
-<<<<<<< HEAD
         width="80">
-=======
-        width="180">
->>>>>>> c949ead05c1f7aa78e19159e1f13b68a887f2a0a
       </el-table-column>
       <el-table-column
         prop="description"
@@ -142,12 +132,8 @@
       </el-table-column>
       <el-table-column
         prop="action"
-<<<<<<< HEAD
         align="center"
         label="操作" width="230">
-=======
-        label="操作">
->>>>>>> c949ead05c1f7aa78e19159e1f13b68a887f2a0a
         <template slot-scope="scope">
           <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>
           <el-button @click="borrowBook(scope.row)" type="primary" plain size="small">借阅</el-button>
