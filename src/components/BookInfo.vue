@@ -102,18 +102,10 @@
       <el-table-column
         prop="author"
         label="作者">
-        label="书名"
-        width="240">
-      </el-table-column>
-      <el-table-column
-        prop="author"
-        label="作者"
-        width="180">
       </el-table-column>
       <el-table-column
         prop="amount"
-        label="数量"
-        width="80">
+        label="数量">
       </el-table-column>
       <el-table-column
         prop="description"
