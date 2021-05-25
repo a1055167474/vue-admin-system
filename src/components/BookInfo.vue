@@ -301,6 +301,9 @@ export default {
       this.type = 'update'
     },
     updateTable (form) {
+      if (typeof form.state !== 'number') {
+        form.state = form.state === '可用' ? 0 : 1
+      }
       http.updateBookList({
         ...form
       }).then(res => {
