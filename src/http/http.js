@@ -1,6 +1,7 @@
 import axios from 'axios'
 import ElementUI from 'element-ui'
 import router from '../router/index'
+import store from '../store/index'
 
 // 设置超时时间
 axios.defaults.timeout = 5000
@@ -12,6 +13,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 // 响应拦截器
 axios.interceptors.response.use(
   response => {
+    console.log(response, 33)
     if (response.status === 200) {
       return Promise.resolve(response)
     } else {
@@ -19,19 +21,26 @@ axios.interceptors.response.use(
     }
   },
   error => {
-    console.log(error)
-    ElementUI.Message({
-      type: 'error',
-      message: error.response.data.message || error.toString()
-    })
-    if (error.response.status === 401) {
-      router.replace({
+    if (error.response.status === 302) {
+      ElementUI.Message({
+        type: 'warning',
+        message: '未登录'
+      })
+      store.commit('logout')
+      router.push({
         path: '/login',
         query: {
           redirect: router.currentRoute.fullPath
         }
+      }).then(r => {
+        console.log(1)
       })
+      return Promise.reject(error)
     }
+    ElementUI.Message({
+      type: 'error',
+      message: error.response.data.message || error.toString()
+    })
     return Promise.reject(error)
   }
 )
@@ -46,7 +55,7 @@ export function get (url, params) {
     axios.get(url, {
       params: params
     }).then(res => {
-      if (res.data.status === 1) {
+      if (res.data.status === 'success') {
         resolve(res.data)
       } else {
         ElementUI.Message({
@@ -70,7 +79,8 @@ export function post (url, params) {
   return new Promise((resolve, reject) => {
     axios.post(url, params)
       .then(res => {
-        if (res.data.status === 1) {
+        console.log(res, 22)
+        if (res.data.status === 'success') {
           resolve(res.data)
         } else {
           reject(res.data)

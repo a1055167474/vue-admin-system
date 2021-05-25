@@ -5,9 +5,11 @@ import Home from '../components/Home'
 import Index from '../components/Index'
 import Test from '../components/Test'
 import Login from '../components/Login'
-import Test2 from '../components/Test2'
+import Welcome from '../components/Welcome'
+import BookInfo from '../components/BookInfo'
 import MenuSetting from '../components/setting/MenuSetting'
 import Role from '../components/setting/Role'
+import BorrowReturn from '../components/BorrowReturn'
 
 Vue.use(Router)
 
@@ -17,7 +19,10 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
-      redirect: '/index',
+      meta: {
+        requireAuth: true
+      },
+      redirect: '/welcome',
       children: [
         {
           path: 'index',
@@ -29,6 +34,15 @@ export default new Router({
           path: 'test',
           name: 'Test',
           component: Test
+        },
+
+        {
+          path: 'welcome',
+          name: 'Welcome',
+          component: Welcome
+          // meta: {
+          //   requireAuth: true
+          // }
         },
         {
           path: 'hello',
@@ -48,8 +62,8 @@ export default new Router({
       children: [
         {
           path: 'tt',
-          name: 'Test2',
-          component: Test2
+          name: 'BookInfo',
+          component: BookInfo
         }
       ]
     },
@@ -61,6 +75,22 @@ export default new Router({
           path: 'menu',
           name: 'MenuSetting',
           component: MenuSetting
+        },
+        {
+          path: 'role',
+          name: 'Role',
+          component: Role
+        }
+      ]
+    },
+    {
+      path: '/borrow',
+      component: Home,
+      children: [
+        {
+          path: 'borrowReturn',
+          name: 'BorrowReturn',
+          component: BorrowReturn
         },
         {
           path: 'role',

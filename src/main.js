@@ -14,8 +14,10 @@ Vue.config.productionTip = false
 Vue.use(Element)
 
 router.beforeEach((to, from, next) => {
+  console.log(to)
   nprogress.start()
-  if (to.meta.requireAuth) {
+  if (to.meta && to.meta['requireAuth']) {
+    console.log(store.state.userinfo, store.state.isLogin)
     if (store.state.userinfo && store.state.isLogin) {
       next()
     } else {

@@ -47,7 +47,7 @@ export default {
   display: none;
 }
 .el-header /deep/{
-  padding: 0 20px 0 0;
+  padding:0;
   border-bottom: 1px solid #e6e6e6 !important;
 }
 .el-footer /deep/{
