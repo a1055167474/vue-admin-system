@@ -5,13 +5,13 @@
         <el-form-item label="姓名"  width="100px">
           <el-input v-model="searchForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="账号"  width="100px">
+        <el-form-item label="账号">
           <el-input v-model="searchForm.account"></el-input>
         </el-form-item>
-        <el-form-item label="电话"  width="100px">
+        <el-form-item label="电话">
           <el-input v-model="searchForm.phone"></el-input>
         </el-form-item>
-        <el-form-item label="角色"  width="100px">
+        <el-form-item label="角色">
           <el-select v-model="searchForm.userRole" placeholder="请选择">
             <el-option
               v-for="item in options"
@@ -31,10 +31,11 @@
           </el-date-picker>
         </el-form-item>
       </el-form>
-      <div style="float: right; margin-right: 100px;">
-        <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
-        <el-button type="primary" icon="el-icon-refresh-right" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
-        <el-button type="primary" icon="el-icon-plus" style="margin-left: 15px;height: 40px"  plain @click="insertForm()">新增</el-button>
+
+      <div style="float:right;margin-right:15px">
+        <el-button type="primary" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
+        <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
+        <el-button type="primary" icon="el-icon-plus" plain @click="insertForm()">新增</el-button>
       </div>
     </div>
     <el-table
@@ -44,17 +45,16 @@
       <el-table-column
         type="index"
         label="序号"
+        align="center"
         width="50">
       </el-table-column>
       <el-table-column
         prop="name"
-        label="姓名"
-        width="180">
+        label="姓名">
       </el-table-column>
       <el-table-column
         prop="account"
-        label="账号"
-        width="180">
+        label="账号">
       </el-table-column>
       <el-table-column
         prop="phone"
@@ -73,6 +73,8 @@
       </el-table-column>
       <el-table-column
         prop="action"
+        align="center"
+        width="160"
         label="操作">
         <template slot-scope="scope">
 <!--          <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>-->
