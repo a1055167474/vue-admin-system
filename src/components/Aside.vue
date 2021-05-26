@@ -75,4 +75,7 @@ export default {
   width: 200px;
   min-height: 400px;
 }
+.el-menu-vertical-demo /deep/{
+  width: 200px;
+}
 </style>

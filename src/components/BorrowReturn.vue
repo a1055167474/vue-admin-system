@@ -1,17 +1,17 @@
 <template>
   <div>
-    <div style="width: 400px;margin-top: 20px;display: flex;">
-      <el-form ref="form" :model="searchForm" label-width="80px">
-        <el-form-item label="书名"  width="100px">
+    <div style="margin-top: 20px">
+      <el-form class="form" ref="form" :model="searchForm" label-width="80px">
+        <el-form-item label="书名">
           <el-input v-model="searchForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="作者"  width="100px">
+        <el-form-item label="作者">
           <el-input v-model="searchForm.author"></el-input>
         </el-form-item>
-        <el-form-item label="备注"  width="100px">
+        <el-form-item label="备注">
           <el-input v-model="searchForm.description"></el-input>
         </el-form-item>
-        <el-form-item label="状态"  width="100px">
+        <el-form-item label="状态">
           <el-select v-model="searchForm.state" placeholder="请选择">
             <el-option
               v-for="item in options"
@@ -21,21 +21,22 @@
             </el-option>
           </el-select>
         </el-form-item>
-                <el-form-item label="上架时间"  width="100px">
-                  <el-date-picker
-                    v-model="value1"
-                    type="daterange"
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期">
-                  </el-date-picker>
-                </el-form-item>
+        <el-form-item label="上架时间">
+          <el-date-picker
+            v-model="value1"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
+          </el-date-picker>
+        </el-form-item>
       </el-form>
+      
+    </div>
+    <div style="float:right;margin-right:16px">
       <el-button type="primary" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
       <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
-    </div>
-    <div>
-      <el-button type="primary" @click="insertForm()">新增</el-button>
+      <el-button type="primary" icon="el-icon-plus" plain @click="insertForm()">新增</el-button>
     </div>
     <el-table
       :data="tableData"
@@ -44,21 +45,21 @@
       <el-table-column
         type="index"
         label="序号"
+        align="center"
         width="50">
       </el-table-column>
       <el-table-column
         prop="name"
-        label="书名"
-        width="240">
+        label="书名">
       </el-table-column>
       <el-table-column
         prop="author"
-        label="作者"
-        width="180">
+        label="作者">
       </el-table-column>
       <el-table-column
         prop="amount"
         label="数量"
+        align="center"
         width="60">
       </el-table-column>
       <el-table-column
@@ -74,6 +75,7 @@
       <el-table-column
         prop="state"
         label="当前状态"
+        align="center"
         width="80">
       </el-table-column>
       <el-table-column
@@ -83,6 +85,8 @@
       </el-table-column>
       <el-table-column
         prop="action"
+        align="center"
+        width="150"
         label="操作">
         <template slot-scope="scope">
           <el-button @click="editForm(scope.row)" type="primary" plain size="small">归还</el-button>
@@ -316,5 +320,11 @@
 </script>
 
 <style scoped>
-
+.form{
+  width: 100%;
+}
+.form .el-form-item /deep/{
+  width: 33%;
+  float: left;
+}
 </style>
