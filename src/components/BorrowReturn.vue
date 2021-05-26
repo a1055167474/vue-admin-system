@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-top: 20px" >
+    <div style="margin-top: 20px;height: 180px;" >
       <el-form class="form" ref="form" :model="searchForm" label-width="80px">
         <el-form-item label="书名"  width="100px">
           <el-input v-model="searchForm.bookName"></el-input>
@@ -11,7 +11,7 @@
         <el-form-item label="借用者"  width="100px">
           <el-input v-model="searchForm.userName"></el-input>
         </el-form-item>
-        <el-form-item label="借用者手机号"  width="150px">
+        <el-form-item label="手机号"  width="150px">
           <el-input v-model="searchForm.phone"></el-input>
         </el-form-item>
         <el-form-item label="状态"  width="100px">
@@ -34,8 +34,10 @@
                   </el-date-picker>
                 </el-form-item>
       </el-form>
-      <el-button type="primary" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
-      <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
+      <div style="float: right; margin-right: 100px;">
+        <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
+        <el-button type="primary" icon="el-icon-refresh-right" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
+      </div>
     </div>
     <el-table
       :data="tableData"
@@ -75,6 +77,11 @@
         prop="state"
         label="当前状态"
         width="80">
+        <template scope="scope">
+          <p v-if="scope.row.state === 0 ">未归还</p>
+          <p v-if="scope.row.state === 1 ">已归还</p>
+          <p v-if="scope.row.state === 2 ">挂失</p>
+        </template>
       </el-table-column>
       <el-table-column
         prop="returnTime"
@@ -133,10 +140,13 @@
         },
         options: [{
           value: '0',
-          label: '可用'
+          label: '未归还'
         }, {
           value: '1',
-          label: '下架'
+          label: '已归还'
+        },{
+          value: '2',
+          label: '挂失'
         }],
         value1: ''
       }

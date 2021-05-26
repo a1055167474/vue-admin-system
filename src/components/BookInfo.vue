@@ -2,19 +2,19 @@
   <div>
     <div style="margin-top: 20px">
       <el-form class="form" ref="form" :model="searchForm" label-width="80px">
-      
+
             <el-form-item label="书名" >
               <el-input v-model="searchForm.name" ></el-input>
             </el-form-item>
-      
+
             <el-form-item label="作者">
               <el-input v-model="searchForm.author"></el-input>
             </el-form-item>
-        
+
             <el-form-item label="备注">
               <el-input v-model="searchForm.description"></el-input>
             </el-form-item>
-        
+
             <el-form-item label="状态">
               <el-select v-model="searchForm.state" placeholder="请选择">
                 <el-option
@@ -25,7 +25,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          
+
           <el-form-item label="上架时间">
             <el-date-picker
               v-model="value1"
@@ -35,43 +35,13 @@
               end-placeholder="结束日期">
             </el-date-picker>
           </el-form-item>
-          <div style="float:right">
+          <div style="float:right; margin-right: 100px;">
             <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
-            <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
+            <el-button type="primary" icon="el-icon-refresh-right" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
             <el-button type="primary" icon="el-icon-plus" plain @click="insertForm()">新增</el-button>
           </div>
-<!--        <el-form-item label="书名" >-->
-<!--          <el-input v-model="searchForm.name" ></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="作者">-->
-<!--          <el-input v-model="searchForm.author"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="备注">-->
-<!--          <el-input v-model="searchForm.description"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="状态">-->
-<!--          <el-select v-model="searchForm.state" placeholder="请选择">-->
-<!--            <el-option-->
-<!--              v-for="item in options"-->
-<!--              :key="item.value"-->
-<!--              :label="item.label"-->
-<!--              :value="item.value">-->
-<!--            </el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="上架时间">-->
-<!--          <el-date-picker-->
-<!--            v-model="value1"-->
-<!--            type="daterange"-->
-<!--            range-separator="至"-->
-<!--            start-placeholder="开始日期"-->
-<!--            end-placeholder="结束日期">-->
-<!--          </el-date-picker>-->
-<!--        </el-form-item>-->
       </el-form>
-
     </div>
-
     <el-table
       :data="tableData"
       border

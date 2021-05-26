@@ -9,7 +9,7 @@
 <!--      </el-aside>-->
       <Aside class="aside"></Aside>
       <el-main class="main">
-        <tagsView></tagsView>
+<!--        <tagsView></tagsView>-->
         <AppMain></AppMain>
 <!--        <router-view :key="$route.path" />-->
       </el-main>

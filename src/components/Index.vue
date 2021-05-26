@@ -1,12 +1,7 @@
 <template>
   <div>
-    <p>
-<!--      <el-button @click="queryUser">确认</el-button>-->
-      <el-button @click="insertForm()">新增</el-button>
-<!--      <el-button type="danger" plain @click="logout">退出</el-button>-->
-    </p>
-    <div style="width: 400px;margin-top: 20px;display: flex;">
-      <el-form ref="form" :model="searchForm" label-width="80px">
+    <div style="margin-top: 20px">
+      <el-form class="form" ref="form" :model="searchForm" label-width="80px">
         <el-form-item label="姓名"  width="100px">
           <el-input v-model="searchForm.name"></el-input>
         </el-form-item>
@@ -26,18 +21,21 @@
             </el-option>
           </el-select>
         </el-form-item>
-<!--        <el-form-item label="注册时间"  width="100px">-->
-<!--          <el-date-picker-->
-<!--            v-model="value1"-->
-<!--            type="daterange"-->
-<!--            range-separator="至"-->
-<!--            start-placeholder="开始日期"-->
-<!--            end-placeholder="结束日期">-->
-<!--          </el-date-picker>-->
-<!--        </el-form-item>-->
+        <el-form-item label="注册时间"  width="100px">
+          <el-date-picker
+            v-model="value1"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
+          </el-date-picker>
+        </el-form-item>
       </el-form>
-      <el-button type="primary" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
-      <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
+      <div style="float: right; margin-right: 100px;">
+        <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
+        <el-button type="primary" icon="el-icon-refresh-right" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
+        <el-button type="primary" icon="el-icon-plus" style="margin-left: 15px;height: 40px"  plain @click="insertForm()">新增</el-button>
+      </div>
     </div>
     <el-table
       :data="tableData"
@@ -75,10 +73,13 @@
       </el-table-column>
       <el-table-column
         prop="action"
-        width="180"
         label="操作">
         <template slot-scope="scope">
-          <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>
+<!--          <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>-->
+          <i class="el-icon-edit btn-i" @click="editForm(scope.row)" title="编辑"></i>
+          <i class="el-icon-switch-button btn-i" @click="editForm(scope.row)" title=""></i>
+          <el-button v-if="Boolean(scope.row.state)"  @click="editForm(scope.row)" type="primary" plain size="small">激活</el-button>
+          <el-button v-if="!Boolean(scope.row.state)" @click="editForm(scope.row)" type="warning" plain size="small">停用</el-button>
           <el-button @click="confirmDelete(scope.row)" type="danger" plain size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -137,6 +138,7 @@ export default {
   data () {
     return {
       tableData: [],
+      state: 0,
       tableLoading: false,
       dialogVisible: false,
       dialogName: '编辑',
@@ -212,6 +214,7 @@ export default {
         this.tableData = res.result
         this.total = res.total
         this.tableLoading = false
+
         // eslint-disable-next-line handle-callback-err
       }).catch(err => {
         this.tableLoading = false
@@ -248,6 +251,8 @@ export default {
       this.form = JSON.parse(JSON.stringify(row))
       this.type = 'update'
     },
+
+
     updateTable (form) {
       http.updateUserList({
         ...form
@@ -323,4 +328,17 @@ export default {
 
 <style scoped>
 
+  .form{
+    width: 100%;
+  }
+  .form .el-form-item /deep/{
+    width: 33%;
+    float: left;
+  }
+
+  .btn-i{
+    cursor: pointer;
+    font-size: 25px;
+    color: #409EFF;
+  }
 </style>
