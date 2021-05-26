@@ -1,15 +1,18 @@
 <template>
   <div>
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px" >
       <el-form class="form" ref="form" :model="searchForm" label-width="80px">
         <el-form-item label="书名">
-          <el-input v-model="searchForm.name"></el-input>
+          <el-input v-model="searchForm.bookName"></el-input>
         </el-form-item>
         <el-form-item label="作者">
           <el-input v-model="searchForm.author"></el-input>
         </el-form-item>
-        <el-form-item label="备注">
-          <el-input v-model="searchForm.description"></el-input>
+        <el-form-item label="借用者">
+          <el-input v-model="searchForm.userName"></el-input>
+        </el-form-item>
+        <el-form-item label="借用者手机号">
+          <el-input v-model="searchForm.phone"></el-input>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="searchForm.state" placeholder="请选择">
@@ -36,7 +39,10 @@
     <div style="float:right;margin-right:16px">
       <el-button type="primary" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
       <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
+<<<<<<< HEAD
       <el-button type="primary" icon="el-icon-plus" plain @click="insertForm()">新增</el-button>
+=======
+>>>>>>> 2ca2734fd6dc6955ef907fcad9f2a21fec0a5318
     </div>
     <el-table
       :data="tableData"
@@ -49,12 +55,23 @@
         width="50">
       </el-table-column>
       <el-table-column
+<<<<<<< HEAD
         prop="name"
         label="书名">
       </el-table-column>
       <el-table-column
         prop="author"
         label="作者">
+=======
+        prop="bookName"
+        label="书名"
+        width="240">
+      </el-table-column>
+      <el-table-column
+        prop="bookAuthor"
+        label="作者"
+        width="180">
+>>>>>>> 2ca2734fd6dc6955ef907fcad9f2a21fec0a5318
       </el-table-column>
       <el-table-column
         prop="amount"
@@ -63,7 +80,7 @@
         width="60">
       </el-table-column>
       <el-table-column
-        prop="description"
+        prop="userName"
         label="借用者"
         width="180">
       </el-table-column>
@@ -79,7 +96,7 @@
         width="80">
       </el-table-column>
       <el-table-column
-        prop="createTime"
+        prop="returnTime"
         label="归还时间"
         width="180">
       </el-table-column>
@@ -89,8 +106,8 @@
         width="150"
         label="操作">
         <template slot-scope="scope">
-          <el-button @click="editForm(scope.row)" type="primary" plain size="small">归还</el-button>
-          <el-button @click="confirmDelete(scope.row)" type="danger" plain size="small">挂失</el-button>
+          <el-button @click="returnBook(scope.row)" type="primary" plain size="small">归还</el-button>
+          <el-button @click="lostReport(scope.row)" type="danger" plain size="small">挂失</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -102,40 +119,6 @@
       :total="total">
     </el-pagination>
 
-    <el-dialog
-      :title= dialogName
-      :visible.sync="dialogVisible"
-      @close="resetForm"
-      width="30%">
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="名称">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="作者">
-          <el-input v-model="form.author"></el-input>
-        </el-form-item>
-        <el-form-item label="备注">
-          <el-input v-model="form.description"></el-input>
-        </el-form-item>
-        <el-form-item label="数量">
-          <el-input v-model="form.amount"></el-input>
-        </el-form-item>
-        <el-form-item label="状态">
-          <el-select v-model="form.state" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="checkUpdateOrInsert(type, form)">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 
 </template>
@@ -148,28 +131,26 @@
     data () {
       return {
         tableData: [],
-        tableLoading: false,
+        dialogName: '',
         dialogVisible: false,
-        dialogName: '编辑',
-        form: {
-          id: '',
-          name: '',
-          author: '',
-          amount: '',
-          description: '',
-          createTime: '',
-          state: ''
-        },
-        type: 'insert',
+        tableLoading: false,
         currentPage: 1,
         total: 0,
         searchForm: {
-          id: '',
-          name: '',
+          bookName: '',
           author: '',
-          description: '',
           createTime: '',
-          state: ''
+          state: '',
+          userName: '',
+          phone: ''
+        },
+        form: {
+          bookName: '',
+          author: '',
+          createTime: '',
+          state: '',
+          userName: '',
+          phone: ''
         },
         options: [{
           value: '0',
@@ -178,27 +159,23 @@
           value: '1',
           label: '下架'
         }],
-        value: '',
         value1: ''
       }
     },
     methods: {
-      queryBook (param) {
+      queryBorrowReturn (param) {
         this.tableLoading = true
-        http.queryBookList(
+        http.queryBorrowReturnList(
           {
             ...param,
-            book:{
-              name: this.searchForm.name,
-              author: this.searchForm.author,
-              description: this.searchForm.description,
-              state: this.searchForm.state,
-              createTime: this.searchForm.createTime
-            },
-            page:{
-              page: this.currentPage,
-              limit: 10
-            }
+            bookName: this.searchForm.bookName,
+            bookAuthor: this.searchForm.author,
+            userName: this.searchForm.userName,
+            phone: this.searchForm.phone,
+            state: this.searchForm.state,
+            createTime: this.searchForm.createTime,
+            page: this.currentPage,
+            size: 10
           }
         ).then(res => {
           this.$message.success(res.message)
@@ -210,88 +187,61 @@
           this.tableLoading = false
         })
       },
-      confirmDelete (row) {
-        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+      lostReport (row) {
+        this.$confirm('是否确认挂失?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.deleteTable(row)
+          this.lostReportBook(row)
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: '已取消挂失'
           })
         })
       },
-      deleteTable (row) {
-        http.deleteBookList({
+      lostReportBook (row) {
+        http.lostReportBook1({
           id: row.id
         }).then(res => {
           this.$message({
             type: 'success',
-            message: '删除成功!'
+            message: '挂失成功，请联系管理员进行处理!'
           })
-          this.queryBook()
+          this.queryBorrowReturn()
         })
       },
-      editForm (row) {
-        this.dialogVisible = true
-        this.dialogName = '编辑'
-        this.form = JSON.parse(JSON.stringify(row))
-        this.type = 'update'
-      },
-      updateTable (form) {
-        http.updateBookList({
-          ...form
+      return (row) {
+        http.returnBook1({
+          id: row.id
         }).then(res => {
           this.$message({
             type: 'success',
-            message: '更新成功!'
+            message: '归还成功'
           })
-          this.dialogVisible = false
-          this.queryBook()
+          this.queryBorrowReturn()
         })
       },
-      insertForm () {
-        this.type = 'insert'
-        this.dialogName = '图书入库'
-        this.dialogVisible = true
-      },
-      insertBook (form) {
-        http.insertBookList({
-          ...form
-        }).then(res => {
+      returnBook (row) {
+        this.$confirm('是否确认归还?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.return(row)
+        }).catch(() => {
           this.$message({
-            type: 'success',
-            message: '新增成功!'
+            type: 'info',
+            message: '已取消归还'
           })
-          this.dialogVisible = false
-          this.queryBook()
         })
-      },
-      checkUpdateOrInsert (type, form) {
-        if (type === 'update') {
-          this.updateTable(form)
-        } else {
-          this.insertBook(form)
-        }
-      },
-      resetForm () {
-        this.form = {
-          name: '',
-          author: '',
-          description: '',
-          amount: '',
-          state: ''
-        }
-        console.log(this.form)
       },
       handleCurrentChange (val) {
         let param = {
           pageNum: val - 1
         }
-        this.queryBook(param)
+        this.queryBorrowReturn(param)
       },
       resetSearch () {
         this.searchForm = {
@@ -301,10 +251,10 @@
           createTime: '',
           state: ''
         }
-        this.queryBook()
+        this.queryBorrowReturn()
       },
       search () {
-        this.queryBook()
+        this.queryBorrowReturn()
       },
       logout () {
         http.logout().then(res => {
@@ -314,12 +264,13 @@
       }
     },
     mounted () {
-      this.queryBook()
+      this.queryBorrowReturn()
     }
   }
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 .form{
   width: 100%;
 }
@@ -327,4 +278,14 @@
   width: 33%;
   float: left;
 }
+=======
+
+  .form{
+    width: 100%;
+  }
+  .form .el-form-item /deep/{
+    width: 33%;
+    float: left;
+  }
+>>>>>>> 2ca2734fd6dc6955ef907fcad9f2a21fec0a5318
 </style>
