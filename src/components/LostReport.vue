@@ -95,7 +95,7 @@
         width="150"
         label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleLostReport(scope.row)" type="primary" plain size="small">线下处理</el-button>
+          <i class="el-icon-place btn-i"  @click="handleLostReport(scope.row)" title="线下处理"></i>
         </template>
       </el-table-column>
     </el-table>
@@ -262,6 +262,12 @@
 .form .el-form-item /deep/{
   width: 33%;
   float: left;
+}
+.btn-i{
+  cursor: pointer;
+  font-size: 25px;
+  margin: 0 5px;
+  color: #409EFF;
 }
 
 </style>

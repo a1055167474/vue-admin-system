@@ -34,7 +34,7 @@
           </el-date-picker>
         </el-form-item>
       </el-form>
-      <div style="float: right; margin-right: 50px;">
+      <div style="float: right; margin-right:15px">
         <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
         <el-button type="primary" icon="el-icon-refresh-right" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
         <el-button type="primary" icon="el-icon-user" style="margin-left: 15px;height: 40px" @click="getCurrentUserBorrow">我的</el-button>
@@ -98,8 +98,8 @@
         width="150"
         label="操作">
         <template slot-scope="scope">
-          <el-button @click="returnBook(scope.row)" type="primary" plain size="small">归还</el-button>
-          <el-button @click="lostReport(scope.row)" type="danger" plain size="small">挂失</el-button>
+          <i class="el-icon-success btn-i" @click="returnBook(scope.row)" title="归还"></i>
+          <i class="el-icon-warning btn-i red"  @click="lostReport(scope.row)" title="挂失"></i>
         </template>
       </el-table-column>
     </el-table>
@@ -300,6 +300,15 @@
 .form .el-form-item /deep/{
   width: 33%;
   float: left;
+}
+.btn-i{
+  cursor: pointer;
+  font-size: 25px;
+  margin: 0 5px;
+  color: #409EFF;
+}
+.red{
+  color: #F56C6C;
 }
 
 </style>

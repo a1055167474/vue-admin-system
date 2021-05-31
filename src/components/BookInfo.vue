@@ -35,7 +35,7 @@
               end-placeholder="结束日期">
             </el-date-picker>
           </el-form-item>
-          <div style="float:right; margin-right: 100px;">
+          <div style="float:right; margin-right: 15px;">
             <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
             <el-button type="primary" icon="el-icon-refresh-right" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
             <el-button type="primary" icon="el-icon-plus" plain @click="insertForm()">新增</el-button>
@@ -87,9 +87,9 @@
         align="center"
         label="操作" width="230">
         <template slot-scope="scope">
-          <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>
-          <el-button @click="borrowBook(scope.row)" type="primary" plain size="small">借阅</el-button>
-          <el-button @click="confirmDelete(scope.row)" type="danger" plain size="small">删除</el-button>
+          <i class="el-icon-edit btn-i" @click="editForm(scope.row)" title="编辑"></i>
+          <i class="el-icon-s-management btn-i" @click="borrowBook(scope.row)" title="借阅"></i>
+          <i class="el-icon-delete btn-i red"  @click="confirmDelete(scope.row)" title="删除"></i>
         </template>
       </el-table-column>
     </el-table>
@@ -360,4 +360,16 @@ export default {
   width: 33%;
   float: left;
 }
+
+.btn-i{
+  cursor: pointer;
+  font-size: 25px;
+  margin: 0 5px;
+  color: #409EFF;
+}
+
+.red{
+  color: #F56C6C;
+}
+
 </style>

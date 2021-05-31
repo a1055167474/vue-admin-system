@@ -33,8 +33,8 @@
       </el-form>
 
       <div style="float:right;margin-right:15px">
-        <el-button type="primary" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
-        <el-button type="primary" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" style="margin-left: 15px;height: 40px" @click="search">搜索</el-button>
+        <el-button type="primary" icon="el-icon-refresh-right" style="margin-left: 15px;height: 40px" @click="resetSearch">重置</el-button>
         <el-button type="primary" icon="el-icon-plus" plain @click="insertForm()">新增</el-button>
       </div>
     </div>
@@ -65,6 +65,13 @@
         prop="userRole"
         label="角色"
         width="180">
+        <template slot-scope="scope">{{ scope.row.userRole === 0 ? '普通用户' : '管理员' }}</template>
+      </el-table-column>
+      <el-table-column
+        prop="state"
+        label="账户状态"
+        width="100">
+        <template slot-scope="scope">{{ scope.row.state === 0 ? '正常' : '停用' }}</template>
       </el-table-column>
       <el-table-column
         prop="createTime"
@@ -78,10 +85,10 @@
         label="操作">
         <template slot-scope="scope">
 <!--          <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>-->
-          <i class="el-icon-edit btn-i" @click="editForm(scope.row)" title="编辑"></i>
-          <i class="el-icon-switch-button btn-i success" v-if="Boolean(scope.row.state)" @click="editForm(scope.row)" title="激活"></i>
-          <i class="el-icon-switch-button btn-i waring" v-if="!Boolean(scope.row.state)" @click="editForm(scope.row)" title="停用"></i>
-          <i class="el-icon-delete btn-i red"  @click="confirmDelete(scope.row)" title="删除"></i>
+          <i class="el-icon-edit btn-i" v-if="state1" @click="editForm(scope.row)" title="编辑"></i>
+          <i class="el-icon-switch-button btn-i success" v-if="(Boolean(scope.row.state) && state1)" @click="userAccountOn(scope.row)" title="激活"></i>
+          <i class="el-icon-switch-button btn-i waring" v-if="(!Boolean(scope.row.state) && state1)" @click="userAccountOff(scope.row)" title="停用"></i>
+          <i class="el-icon-delete btn-i red" v-if="state1" @click="confirmDelete(scope.row)" title="删除"></i>
         </template>
       </el-table-column>
     </el-table>
@@ -172,6 +179,11 @@ export default {
       value1: ''
     }
   },
+  computed: {
+    state1 () {
+      return Boolean(this.$store.state.userinfo.userRole)
+    }
+  },
   created () {
     // this.queryPhpUser();
   },
@@ -252,7 +264,62 @@ export default {
       this.form = JSON.parse(JSON.stringify(row))
       this.type = 'update'
     },
-
+    userAccountOn(row){
+      this.$confirm('是否启用该账户?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.userAccountOn1(row)
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
+    },
+    userAccountOff(row){
+      this.$confirm('是否停用该账户?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.userAccountOff1(row)
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
+    },
+    //用户账户启用
+    userAccountOn1(row){
+      http.updateUserList({
+        state: 0,
+        id: row.id
+      }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '启用成功!'
+        })
+        this.dialogVisible = false
+        this.queryUser()
+      })
+    },
+    //用户账户停用
+    userAccountOff1(row){
+      http.updateUserList({
+        state: 1,
+        id: row.id
+      }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '停用成功!'
+        })
+        this.dialogVisible = false
+        this.queryUser()
+      })
+    },
 
     updateTable (form) {
       http.updateUserList({
