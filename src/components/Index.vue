@@ -79,10 +79,9 @@
         <template slot-scope="scope">
 <!--          <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>-->
           <i class="el-icon-edit btn-i" @click="editForm(scope.row)" title="编辑"></i>
-          <i class="el-icon-switch-button btn-i" @click="editForm(scope.row)" title=""></i>
-          <el-button v-if="Boolean(scope.row.state)"  @click="editForm(scope.row)" type="primary" plain size="small">激活</el-button>
-          <el-button v-if="!Boolean(scope.row.state)" @click="editForm(scope.row)" type="warning" plain size="small">停用</el-button>
-          <el-button @click="confirmDelete(scope.row)" type="danger" plain size="small">删除</el-button>
+          <i class="el-icon-switch-button btn-i success" v-if="Boolean(scope.row.state)" @click="editForm(scope.row)" title="激活"></i>
+          <i class="el-icon-switch-button btn-i waring" v-if="!Boolean(scope.row.state)" @click="editForm(scope.row)" title="停用"></i>
+          <i class="el-icon-delete btn-i red"  @click="confirmDelete(scope.row)" title="删除"></i>
         </template>
       </el-table-column>
     </el-table>
@@ -329,7 +328,6 @@ export default {
 </script>
 
 <style scoped>
-
   .form{
     width: 100%;
   }
@@ -341,6 +339,16 @@ export default {
   .btn-i{
     cursor: pointer;
     font-size: 25px;
+    margin: 0 5px;
     color: #409EFF;
+  }
+  .red{
+    color: #F56C6C;
+  }
+  .waring {
+    color: #E6A23C;
+  }
+  .success {
+    color: #67C23A;
   }
 </style>
