@@ -14,9 +14,6 @@ export default new Vuex.Store({
       meta: {
         affix: true
       }
-    }, {
-      path: '/test',
-      name: '测试'
     }]
   },
   mutations: {
@@ -39,6 +36,13 @@ export default new Vuex.Store({
       for (const [i, v] of Object.entries(state.tagsView)) {
         if (v.path === tag.path) {
           state.tagsView.splice(i, 1)
+          break
+        }
+      }
+    },
+    add_tagsView(state, tag) {
+      for (const [i, v] of Object.entries(state.tagsView)) {
+        if (v.path === tag.path) {
           break
         }
       }
