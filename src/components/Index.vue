@@ -74,7 +74,7 @@
       <el-table-column
         prop="action"
         align="center"
-        width="160"
+        width="220"
         label="操作">
         <template slot-scope="scope">
 <!--          <el-button @click="editForm(scope.row)" type="primary" plain size="small">编辑</el-button>-->

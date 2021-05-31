@@ -69,5 +69,13 @@ export default {
 
   returnBook1 (params) {
     return post(baseUrl + '/borrowReturn/returnBook', params)
+  },
+
+  queryLostReport(params){
+    return get(baseUrl + '/borrowReturn/getLostReportList', params)
+  },
+
+  handleLostReport2(params){
+    return get(baseUrl + '/borrowReturn/handleLostReport', params)
   }
 }

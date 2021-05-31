@@ -10,6 +10,7 @@ import BookInfo from '../components/BookInfo'
 import MenuSetting from '../components/setting/MenuSetting'
 import Role from '../components/setting/Role'
 import BorrowReturn from '../components/BorrowReturn'
+import LostReport from '../components/LostReport'
 
 Vue.use(Router)
 
@@ -96,6 +97,11 @@ export default new Router({
           path: 'role',
           name: 'Role',
           component: Role
+        },
+        {
+          path: 'lostReport',
+          name: 'LostReport',
+          component: LostReport
         }
       ]
     }
