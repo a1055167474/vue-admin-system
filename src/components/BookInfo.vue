@@ -28,11 +28,12 @@
 
           <el-form-item label="上架时间">
             <el-date-picker
-              v-model="value1"
+              v-model="searchForm.value1"
               type="daterange"
               range-separator="至"
               start-placeholder="开始日期"
-              end-placeholder="结束日期">
+              end-placeholder="结束日期"
+              value-format="yyyy-MM-dd">
             </el-date-picker>
           </el-form-item>
           <div style="float:right; margin-right: 15px;">
@@ -87,9 +88,9 @@
         align="center"
         label="操作" width="230">
         <template slot-scope="scope">
-          <i class="el-icon-edit btn-i" @click="editForm(scope.row)" title="编辑"></i>
+          <i class="el-icon-edit btn-i" v-if="state1" @click="editForm(scope.row)" title="编辑"></i>
           <i class="el-icon-s-management btn-i" @click="borrowBook(scope.row)" title="借阅"></i>
-          <i class="el-icon-delete btn-i red"  @click="confirmDelete(scope.row)" title="删除"></i>
+          <i class="el-icon-delete btn-i red" v-if="state1" @click="confirmDelete(scope.row)" title="删除"></i>
         </template>
       </el-table-column>
     </el-table>
@@ -167,8 +168,8 @@ export default {
         name: '',
         author: '',
         description: '',
-        createTime: '',
-        state: ''
+        state: '',
+        value1: []
       },
       options: [{
         value: 0,
@@ -177,8 +178,11 @@ export default {
         value: 1,
         label: '下架'
       }],
-      value: '',
-      value1: ''
+    }
+  },
+  computed: {
+    state1 () {
+      return Boolean(this.$store.state.userinfo.userRole)
     }
   },
   methods: {
@@ -192,7 +196,8 @@ export default {
             author: this.searchForm.author,
             description: this.searchForm.description,
             state: this.searchForm.state,
-            createTime: this.searchForm.createTime
+            createTime: this.searchForm.value1 === null ? '' : this.searchForm.value1[0] ,
+            endTime: this.searchForm.value1 === null ? '' : this.searchForm.value1[1]
           },
           page:{
             page: this.currentPage,
@@ -330,7 +335,7 @@ export default {
         name: '',
         author: '',
         description: '',
-        createTime: '',
+        value1: '',
         state: ''
       }
       this.queryBook()

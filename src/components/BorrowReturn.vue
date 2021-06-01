@@ -24,13 +24,24 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="上架时间">
+        <el-form-item label="借出时间">
           <el-date-picker
-            v-model="value1"
+            v-model="searchForm.value1"
             type="daterange"
             range-separator="至"
             start-placeholder="开始日期"
-            end-placeholder="结束日期">
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="归还时间">
+          <el-date-picker
+            v-model="searchForm.value2"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd">
           </el-date-picker>
         </el-form-item>
       </el-form>
@@ -53,7 +64,7 @@
       <el-table-column
         prop="bookName"
         label="书名"
-        width="240">
+        width="">
       </el-table-column>
       <el-table-column
         prop="bookAuthor"
@@ -69,12 +80,17 @@
       <el-table-column
         prop="userName"
         label="借用者"
+        width="80">
+      </el-table-column>
+      <el-table-column
+        prop="phone"
+        label="电话"
         width="180">
       </el-table-column>
       <el-table-column
         prop="createTime"
         label="借用时间"
-        width="180">
+        width="150">
       </el-table-column>
       <el-table-column
         prop="state"
@@ -90,7 +106,7 @@
       <el-table-column
         prop="returnTime"
         label="归还时间"
-        width="180">
+        width="150">
       </el-table-column>
       <el-table-column
         prop="action"
@@ -131,7 +147,8 @@
         searchForm: {
           bookName: '',
           author: '',
-          createTime: '',
+          value1: '',
+          value2: '',
           state: '',
           userName: '',
           phone: ''
@@ -154,7 +171,6 @@
           value: '2',
           label: '挂失'
         }],
-        value1: ''
       }
     },
     methods: {
@@ -168,7 +184,10 @@
             userName: this.searchForm.userName,
             phone: this.searchForm.phone,
             state: this.searchForm.state,
-            createTime: this.searchForm.createTime,
+            createTime: this.searchForm.value1 === null ? '' : this.searchForm.value1[0],
+            endTime: this.searchForm.value1 === null ? '' : this.searchForm.value1[1],
+            returnTime: this.searchForm.value2 === null ? '' : this.searchForm.value2[0],
+            returnEndTime: this.searchForm.value2 === null ? '' : this.searchForm.value2[1],
             page: this.currentPage,
             size: 10
           }
@@ -245,6 +264,8 @@
         this.searchForm.bookName = ''
         this.searchForm.state =''
         this.searchForm.phone=''
+        this.searchForm.value1=''
+        this.searchForm.value2=''
         http.queryBorrowReturnList(
           {
             ...param,
@@ -269,11 +290,13 @@
       },
       resetSearch () {
         this.searchForm = {
-          name: '',
+          bookName: '',
           author: '',
-          description: '',
-          createTime: '',
-          state: ''
+          value1: '',
+          value2: '',
+          state: '',
+          userName: '',
+          phone: ''
         }
         this.queryBorrowReturn()
       },

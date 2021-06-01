@@ -23,11 +23,12 @@
         </el-form-item>
         <el-form-item label="注册时间"  width="100px">
           <el-date-picker
-            v-model="value1"
+            v-model="searchForm.value1"
             type="daterange"
             range-separator="至"
             start-placeholder="开始日期"
-            end-placeholder="结束日期">
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd">
           </el-date-picker>
         </el-form-item>
       </el-form>
@@ -165,8 +166,7 @@ export default {
         account: '',
         phone: '',
         userRole: '',
-        createTime: '',
-        endTime: ''
+        value1: ''
       },
       options: [{
         value: '0',
@@ -175,8 +175,6 @@ export default {
         value: '1',
         label: '管理员'
       }],
-      value: '',
-      value1: ''
     }
   },
   computed: {
@@ -217,8 +215,8 @@ export default {
           account: this.searchForm.account,
           phone: this.searchForm.phone,
           userRole: this.searchForm.userRole,
-          createTime: this.searchForm.createTime,
-          endTime: this.searchForm.endTime,
+          createTime: this.searchForm.value1 === null ? '' : this.searchForm.value1[0],
+          endTime: this.searchForm.value1 === null ? '' : this.searchForm.value1[1],
           page: this.currentPage,
           size: 10
         }
@@ -374,7 +372,11 @@ export default {
     },
     resetSearch () {
       this.searchForm = {
-        name: ''
+        name: '',
+        account: '',
+        phone: '',
+        userRole: '',
+        value1: ''
       }
       this.queryUser()
     },

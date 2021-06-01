@@ -16,20 +16,22 @@
         </el-form-item>
         <el-form-item label="借用时间">
         <el-date-picker
-          v-model="value1"
+          v-model="searchForm.value1"
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
-          end-placeholder="结束日期">
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd">
         </el-date-picker>
       </el-form-item>
         <el-form-item label="挂失时间">
           <el-date-picker
-            v-model="value2"
+            v-model="searchForm.value2"
             type="daterange"
             range-separator="至"
             start-placeholder="开始日期"
-            end-placeholder="结束日期">
+            end-placeholder="结束日期"
+            value-format="yyyy-MM-dd">
           </el-date-picker>
         </el-form-item>
 
@@ -66,12 +68,17 @@
       <el-table-column
         prop="userName"
         label="借用者"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="phone"
+        label="电话"
         width="180">
       </el-table-column>
       <el-table-column
         prop="createTime"
         label="借出时间"
-        width="180">
+        width="150">
       </el-table-column>
       <el-table-column
         prop="state"
@@ -87,7 +94,7 @@
       <el-table-column
         prop="returnTime"
         label="挂失时间"
-        width="180">
+        width="150">
       </el-table-column>
       <el-table-column
         prop="action"
@@ -127,10 +134,11 @@
         searchForm: {
           bookName: '',
           author: '',
-          createTime: '',
           state: '',
           userName: '',
-          phone: ''
+          phone: '',
+          value1: '',
+          value2: ''
         },
         form: {
           bookName: '',
@@ -150,8 +158,6 @@
           value: '2',
           label: '挂失'
         }],
-        value1: '',
-        value2: ''
       }
     },
     methods: {
@@ -167,7 +173,10 @@
               userName: this.searchForm.userName,
               phone: this.searchForm.phone,
               state: this.searchForm.state,
-              createTime: this.searchForm.createTime,
+              createTime: this.searchForm.value1 === null ? '' : this.searchForm.value1[0],
+              endTime: this.searchForm.value1 === null ? '' : this.searchForm.value1[1],
+              returnTime: this.searchForm.value2 === null ? '' : this.searchForm.value2[0],
+              returnEndTime: this.searchForm.value2 === null ? '' : this.searchForm.value2[1],
               page: this.currentPage,
               size: 10
             }
@@ -218,11 +227,13 @@
       },
       resetSearch () {
         this.searchForm = {
-          name: '',
+          bookName: '',
           author: '',
-          description: '',
-          createTime: '',
-          state: ''
+          value1: '',
+          value2: '',
+          state: '',
+          userName: '',
+          phone: ''
         }
         this.queryLostReport()
       },
