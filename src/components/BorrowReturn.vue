@@ -105,7 +105,7 @@
       </el-table-column>
       <el-table-column
         prop="returnTime"
-        label="归还时间"
+        label="归还/挂失时间"
         width="150">
       </el-table-column>
       <el-table-column
@@ -114,8 +114,8 @@
         width="150"
         label="操作">
         <template slot-scope="scope">
-          <i class="el-icon-success btn-i" @click="returnBook(scope.row)" title="归还"></i>
-          <i class="el-icon-warning btn-i red"  @click="lostReport(scope.row)" title="挂失"></i>
+          <i class="el-icon-circle-check btn-i" v-if="(Boolean(scope.row.state=== 0 ? 1 : 0))" @click="returnBook(scope.row)" title="归还"></i>
+          <i class="el-icon-warning-outline btn-i red" v-if="(Boolean(scope.row.state=== 0 ? 1 : 0))" @click="lostReport(scope.row)" title="挂失"></i>
         </template>
       </el-table-column>
     </el-table>
