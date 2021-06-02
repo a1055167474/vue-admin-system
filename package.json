@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "echarts": "^5.1.1",
     "element-ui": "^2.15.0",
     "nprogress": "^0.2.0",
     "vue": "^2.5.2",

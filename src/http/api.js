@@ -77,5 +77,25 @@ export default {
 
   handleLostReport2(params){
     return get(baseUrl + '/borrowReturn/handleLostReport', params)
+  },
+
+  getWeekDate(params){
+    return get(baseUrl + '/home/getWeekUserLogin', params)
+  },
+
+  getLoginCount(params){
+    return get(baseUrl + '/home/getLoginCount', params)
+  },
+
+  getBookTop(params){
+    return get(baseUrl + '/home/getBookTopFive', params)
+  },
+
+  getBookCount(params){
+    return get(baseUrl + '/home/getBookCount', params)
+  },
+
+  getUserCount(params){
+    return get(baseUrl + '/home/getUserCount', params)
   }
 }
