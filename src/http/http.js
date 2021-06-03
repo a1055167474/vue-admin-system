@@ -22,10 +22,10 @@ axios.interceptors.response.use(
   },
   error => {
     if (error.response.status === 302) {
-      ElementUI.Message({
-        type: 'warning',
-        message: '未登录'
-      })
+      // ElementUI.Message({
+      //   type: 'warning',
+      //   message: '未登录'
+      // })
       store.commit('logout')
       router.push({
         path: '/login',
