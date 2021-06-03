@@ -19,7 +19,7 @@
           <span>人员管理</span>
         </template>
         <el-menu-item index="/index">用户信息</el-menu-item>
-        <el-menu-item index="/test">test</el-menu-item>
+<!--        <el-menu-item index="/test">test</el-menu-item>-->
 <!--        <el-menu-item index="/welcome">首页</el-menu-item>-->
       </el-submenu>
       <el-submenu index="/ts">
